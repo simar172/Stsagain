@@ -14,7 +14,7 @@ public interface PostService {
 
     PostDto getPost(int id);
 
-    List<PostDto> getAllPost();
+    List<PostDto> getAllPost(int ps,int pn);
 
   
 

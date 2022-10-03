@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 import com.example.ytproj.entities.Post;
@@ -45,9 +46,12 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PostDto>> getAllPost() {
-        List<PostDto> li = ps.getAllPost();
+    public ResponseEntity<List<PostDto>> getAllPost(
+            @RequestParam(defaultValue = "1", value = "pagenumber", required = false) int pn,
+            @RequestParam(defaultValue = "2", value = "pagesize", required = false) int ps) {
+        List<PostDto> li = this.ps.getAllPost(ps, pn);
         return new ResponseEntity<List<PostDto>>(li, HttpStatus.OK);
+
     }
 
     @GetMapping("/post/{pid}")

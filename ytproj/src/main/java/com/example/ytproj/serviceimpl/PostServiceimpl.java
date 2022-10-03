@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.ytproj.entities.Catrgory;
@@ -71,9 +74,11 @@ public class PostServiceimpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost() {
+    public List<PostDto> getAllPost(int pagesize, int pagenumber) {
         // TODO Auto-generated method stub
-        List<Post> li = (List<Post>) ps.findAll();
+
+        PageRequest pq = PageRequest.of(pagenumber, pagesize);
+        Page<Post> li = ps.findAll(pq);
         List<PostDto> nli = new ArrayList<>();
         for (Post p : li) {
             nli.add(mm.map(p, PostDto.class));
