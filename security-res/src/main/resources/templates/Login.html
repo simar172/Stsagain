@@ -1,0 +1,66 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Login here ...</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+			crossorigin="anonymous">
+		<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css" />
+		<style>
+</style>
+	</head>
+	<body>
+
+		<div class="box mg">
+			<div class="container mg" align="center">
+				<div th:if="${param.error}" class="text-danger container">
+					<div class="alert alert-danger" role="alert">Invalid cred!!</div>
+				</div>
+				<h1 class="head">Enter your Login Details ...</h1><br>
+				<form th:action="@{/submit}" method="post" class="">
+
+					<div class="mb-3">
+						<label for="exampleInputEmail1" class="form-label head algn"><h3><u>Email
+									address</u></h3></label> <input type="text" placeholder="Enter
+							username..." name="username" class="form-control sz "
+							id="exampleInputEmail1" aria-describedby="emailHelp">
+						<div id="emailHelp" class="form-text head">We'll never share your
+							email with anyone else.</div>
+					</div>
+					<div class="mb-3">
+						<label for="exampleInputPassword1" class="form-label head"><h3><u>Password</u></h3></label>
+						<input type="password" placeholder="Enter password..." class="form-control
+							sz inp" name="password"
+							id="exampleInputPassword1">
+						<div>
+							<p class="inv"></p>
+						</div>
+					</div>
+					<div class="mb-3 form-check head">
+						<input type="checkbox" name="remember" class=" head "
+							id="exampleCheck1"> <label class="form-check-label "
+							for="remember">Check me out</label>
+					</div>
+					<div align="center">
+						<button type="submit" class="btn btn-primary subs">Submit</button>
+					</div>
+				</form>
+				<br>
+			</div>
+			<div align="center">
+				<a href="/signup/">
+					<button type="submit" class="btn btn-warning">Signup</button>
+				</a>
+			</div>
+		</div>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+			crossorigin="anonymous"></script>
+		<script th:src="@{/js/index.js}"></script>
+	</body>
+</html>

@@ -1,0 +1,38 @@
+.mg {
+  margin-top: 100px;
+}
+
+body {
+  background-image: url("/images/back.jpg");
+  background-size: 140%;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.head {
+  color: black;
+}
+
+.sz {
+  inline-size: 40%;
+}
+.inv {
+  color: red;
+  margin-right: 20px;
+}
+
+.box {
+  background: #fff;
+  width: 800px;
+  height: 600px;
+  margin: 65px auto;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+}
