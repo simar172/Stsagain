@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
+
+import com.example.ytproj.config.Constants;
 import com.example.ytproj.entities.Post;
 import com.example.ytproj.payload.PostDto;
+import com.example.ytproj.payload.PostResponse;
 import com.example.ytproj.repositries.Categoryrepo;
 import com.example.ytproj.service.PostService;
 
@@ -46,11 +49,13 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PostDto>> getAllPost(
-            @RequestParam(defaultValue = "1", value = "pagenumber", required = false) int pn,
-            @RequestParam(defaultValue = "2", value = "pagesize", required = false) int ps) {
-        List<PostDto> li = this.ps.getAllPost(ps, pn);
-        return new ResponseEntity<List<PostDto>>(li, HttpStatus.OK);
+    public ResponseEntity<PostResponse> getAllPost(
+            @RequestParam(defaultValue = Constants.PageNo, value = "pagenumber", required = false) int pn,
+            @RequestParam(defaultValue = Constants.PageSize, value = "pagesize", required = false) int ps,
+            @RequestParam(defaultValue = Constants.sortBy, value = "sortby", required = false) String sort,
+            @RequestParam(defaultValue = Constants.sortDir, value = "sortdir", required = false) String dir) {
+        PostResponse pr = this.ps.getAllPost(ps, pn, sort, dir);
+        return new ResponseEntity<PostResponse>(pr, HttpStatus.OK);
 
     }
 
@@ -71,4 +76,9 @@ public class PostController {
         ps.deletePost(pid);
     }
 
+    @GetMapping("/search/post/{key}")
+    public ResponseEntity<List<PostDto>> searchByKeyWords(@PathVariable String key) {
+        List<PostDto> li = ps.searchPost(key);
+        return new ResponseEntity<List<PostDto>>(li, HttpStatus.OK);
+    }
 }

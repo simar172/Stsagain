@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.ytproj.entities.Catrgory;
 import com.example.ytproj.entities.Post;
 import com.example.ytproj.entities.User;
 import com.example.ytproj.payload.PostDto;
+import com.example.ytproj.payload.PostResponse;
 import com.example.ytproj.repositries.Categoryrepo;
 import com.example.ytproj.repositries.PostRepo;
 import com.example.ytproj.repositries.Repo;
@@ -74,16 +76,23 @@ public class PostServiceimpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost(int pagesize, int pagenumber) {
+    public PostResponse getAllPost(int pagesize, int pagenumber, String sort, String dir) {
         // TODO Auto-generated method stub
-
-        PageRequest pq = PageRequest.of(pagenumber, pagesize);
+        Sort sort2 = (dir.equals("asc")) ? Sort.by(sort).ascending() : Sort.by(sort).descending();
+        PageRequest pq = PageRequest.of(pagenumber, pagesize, sort2);
         Page<Post> li = ps.findAll(pq);
         List<PostDto> nli = new ArrayList<>();
         for (Post p : li) {
             nli.add(mm.map(p, PostDto.class));
         }
-        return nli;
+        PostResponse pr = new PostResponse();
+        pr.setContent(nli);
+        pr.setPagenumber(li.getNumber());
+        pr.setPagesize(li.getSize());
+        pr.setTotalelements(li.getTotalElements());
+        pr.setTotalpage(li.getTotalPages());
+        pr.setLastpage(li.isLast());
+        return pr;
     }
 
     public List<PostDto> getPostByCategory(int cid) {
@@ -112,7 +121,12 @@ public class PostServiceimpl implements PostService {
     @Override
     public List<PostDto> searchPost(String key) {
         // TODO Auto-generated method stub
-        return null;
+        List<Post> li = ps.findByTitleContaining(key);
+        List<PostDto> nli = new ArrayList<>();
+        for (Post p : li) {
+            nli.add(mm.map(p, PostDto.class));
+        }
+        return nli;
     }
 
 }

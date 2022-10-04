@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class PostDto {
-
+    int id;
     String title;
     String content;
     String imagename;

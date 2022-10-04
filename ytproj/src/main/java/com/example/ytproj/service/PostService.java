@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.example.ytproj.entities.Post;
 import com.example.ytproj.payload.PostDto;
+import com.example.ytproj.payload.PostResponse;
 
 public interface PostService {
     PostDto createPost(PostDto pt, int uid, int cid);
@@ -14,7 +15,7 @@ public interface PostService {
 
     PostDto getPost(int id);
 
-    List<PostDto> getAllPost(int ps,int pn);
+    PostResponse getAllPost(int ps,int pn,String sort,String dir);
 
   
 
