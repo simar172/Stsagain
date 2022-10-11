@@ -52,7 +52,7 @@ public class User implements UserDetails {
         // TODO Auto-generated method stub
         List<GrantedAuthority> li = set.stream().map((role) -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
-       
+
         return li;
     }
 

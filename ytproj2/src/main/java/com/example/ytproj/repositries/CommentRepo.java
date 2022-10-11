@@ -1,3 +1,4 @@
+
 package com.example.ytproj.repositries;
 
 import org.springframework.data.jpa.repository.JpaRepository;

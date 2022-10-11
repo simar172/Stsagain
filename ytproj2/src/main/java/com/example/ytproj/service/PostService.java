@@ -1,3 +1,4 @@
+
 package com.example.ytproj.service;
 
 import java.util.*;
@@ -15,9 +16,7 @@ public interface PostService {
 
     PostDto getPost(int id);
 
-    PostResponse getAllPost(int ps,int pn,String sort,String dir);
-
-  
+    PostResponse getAllPost(int ps, int pn, String sort, String dir);
 
     List<PostDto> getPostByCategory(int cid);
 

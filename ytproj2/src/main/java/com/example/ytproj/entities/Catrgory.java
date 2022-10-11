@@ -28,5 +28,5 @@ public class Catrgory {
     String title;
     String description;
     @OneToMany(mappedBy = "ct", cascade = CascadeType.ALL)
-    List<Post> li=new ArrayList<>();
+    List<Post> li = new ArrayList<>();
 }
