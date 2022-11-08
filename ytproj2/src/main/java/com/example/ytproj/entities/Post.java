@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,11 +25,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     String title;
+    
     String content;
     String imagename;
     Date date;
@@ -34,6 +39,6 @@ public class Post {
     Catrgory ct;
     @ManyToOne
     User u;
-    @OneToMany(mappedBy = "p",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "p", cascade = CascadeType.ALL)
     List<Comment> li = new ArrayList<>();
 }

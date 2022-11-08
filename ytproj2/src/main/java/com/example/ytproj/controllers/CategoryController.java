@@ -16,11 +16,12 @@ import com.example.ytproj.payload.CategoryDto;
 import com.example.ytproj.service.CategoryService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
     CategoryService s;
+
     @PostMapping("/")
     public ResponseEntity<CategoryDto> createUser(@RequestBody CategoryDto ct) {
         CategoryDto u = s.createuser(ct);
@@ -41,7 +42,7 @@ public class CategoryController {
     @GetMapping("/")
     public ResponseEntity<List<CategoryDto>> getall() {
         List<CategoryDto> li = s.getall();
-        return new ResponseEntity<List<CategoryDto>>(li, HttpStatus.FOUND);
+        return new ResponseEntity<List<CategoryDto>>(li, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

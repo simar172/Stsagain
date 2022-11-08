@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,10 +46,10 @@ public class PostController {
     ImageService ig;
 
     @PostMapping("/user/{uid}/category/{cid}")
-    public ResponseEntity<PostDto> createUser(@RequestBody PostDto pt, @PathVariable("uid") int uid,
+    public ResponseEntity<PostDto> createPost(@RequestBody PostDto pt, @PathVariable("uid") int uid,
             @PathVariable("cid") int cid) {
         PostDto np = ps.createPost(pt, uid, cid);
-        return new ResponseEntity<PostDto>(np, HttpStatus.OK);
+        return new ResponseEntity<PostDto>(np, HttpStatus.CREATED);
     }
 
     @GetMapping("/user/{uid}/posts")
@@ -80,14 +81,14 @@ public class PostController {
         return new ResponseEntity<PostDto>(p, HttpStatus.OK);
     }
 
-    @PostMapping("/post/{pid}")
+    @PutMapping("/updatePost/{pid}")
     public ResponseEntity<PostDto> updatePostById(@RequestBody PostDto pd, @PathVariable int pid) {
         PostDto np = ps.updatePost(pd, pid);
         return new ResponseEntity<PostDto>(np, HttpStatus.OK);
     }
 
     @DeleteMapping("/post/{pid}")
-    public void deletePostById(int pid) {
+    public void deletePostById(@PathVariable int pid) {
         ps.deletePost(pid);
     }
 
@@ -109,9 +110,14 @@ public class PostController {
 
     @GetMapping(value = "/post/show/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public void showImage(@PathVariable String imageName, HttpServletResponse hr) throws IOException {
-        InputStream is = ig.serveImage(imageName);
-        hr.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        org.hibernate.engine.jdbc.StreamUtils.copy(is, hr.getOutputStream());
+        try {
+            InputStream is = ig.serveImage(imageName);
+            hr.setContentType(MediaType.IMAGE_JPEG_VALUE);
+            org.hibernate.engine.jdbc.StreamUtils.copy(is, hr.getOutputStream());
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
     }
 
 }

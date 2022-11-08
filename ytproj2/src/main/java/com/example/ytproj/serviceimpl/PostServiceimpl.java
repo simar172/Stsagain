@@ -48,16 +48,18 @@ public class PostServiceimpl implements PostService {
         np.setCt(ct);
 
         Post save = ps.save(np);
-        return mm.map(np, PostDto.class);
+        return mm.map(save, PostDto.class);
     }
 
     @Override
     public PostDto updatePost(PostDto pt, int id) {
         // TODO Auto-generated method stub]
         Post op = ps.findById(id).get();
+        Catrgory category = cr.findById(pt.getCt().getId()).get();
         op.setContent(pt.getContent());
         op.setImagename(pt.getImagename());
         op.setTitle(pt.getTitle());
+        op.setCt(category);
         Post np = ps.save(op);
         return mm.map(np, PostDto.class);
     }

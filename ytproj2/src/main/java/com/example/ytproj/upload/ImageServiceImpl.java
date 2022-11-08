@@ -16,10 +16,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.val;
+
 @Service
 public class ImageServiceImpl implements ImageService {
     @Value("${project.image}")
     String imagePath;
+
+    @Value("${user.image}")
+    String profilePath;
 
     @Override
     public String uploadImage(MultipartFile mf) throws IOException {
@@ -41,6 +46,29 @@ public class ImageServiceImpl implements ImageService {
     public InputStream serveImage(String filename) throws FileNotFoundException {
         // TODO Auto-generated method stub
         InputStream isInputStream = new FileInputStream(imagePath + File.separator + filename);
+        return isInputStream;
+    }
+
+    @Override
+    public String profileImage(MultipartFile mf) throws IOException {
+        // TODO Auto-generated method stub
+        File f = new File(profilePath);
+        if (!f.exists()) {
+            f.mkdir();
+        }
+
+        Files.copy(mf.getInputStream(),
+                Path.of(profilePath +
+                        File.separator +
+                        mf.getOriginalFilename()),
+                StandardCopyOption.REPLACE_EXISTING);
+        return mf.getOriginalFilename();
+    }
+
+    @Override
+    public InputStream serveProfileImage(String filename) throws FileNotFoundException {
+        // TODO Auto-generated method stub
+        InputStream isInputStream = new FileInputStream(profilePath + File.separator + filename);
         return isInputStream;
     }
 

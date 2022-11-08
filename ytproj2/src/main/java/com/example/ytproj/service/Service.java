@@ -6,6 +6,9 @@ import com.example.ytproj.payload.UserDto;
 import java.util.*;
 
 public interface Service {
+
+    UserDto registerUser(UserDto u);
+
     UserDto createuser(UserDto u);
 
     UserDto updateuser(UserDto u, int id);

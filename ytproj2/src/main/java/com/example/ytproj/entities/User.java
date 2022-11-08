@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Generated;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,6 +40,8 @@ public class User implements UserDetails {
     String email;
     String password;
     String about;
+    @Column(name = "imagename")
+    String imagename;
     @OneToMany(mappedBy = "u", cascade = CascadeType.ALL)
     List<Post> li = new ArrayList<>();
     @OneToMany
