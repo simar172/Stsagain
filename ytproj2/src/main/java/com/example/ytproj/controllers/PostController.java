@@ -98,20 +98,22 @@ public class PostController {
         return new ResponseEntity<List<PostDto>>(li, HttpStatus.OK);
     }
 
-    @PostMapping("/post/store/{pid}")
-    public ResponseEntity<PostDto> storeImage(@RequestParam("image") MultipartFile mf, @PathVariable int pid)
+    @PostMapping("/post/store/{pid}/{uname}")
+    public ResponseEntity<PostDto> storeImage(@RequestParam("image") MultipartFile mf, @PathVariable int pid,
+            @PathVariable("uname") String uname)
             throws IOException {
-        String imageName = ig.uploadImage(mf);
+        String imageName = ig.uploadImage(mf, uname);
         PostDto pt = ps.getPost(pid);
         pt.setImagename(imageName);
         PostDto up = ps.updatePost(pt, pid);
         return new ResponseEntity<PostDto>(up, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/post/show/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public void showImage(@PathVariable String imageName, HttpServletResponse hr) throws IOException {
+    @GetMapping(value = "/post/show/{imageName}/{uname}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public void showImage(@PathVariable String imageName, HttpServletResponse hr, @PathVariable("uname") String uname)
+            throws IOException {
         try {
-            InputStream is = ig.serveImage(imageName);
+            InputStream is = ig.serveImage(imageName,uname);
             hr.setContentType(MediaType.IMAGE_JPEG_VALUE);
             org.hibernate.engine.jdbc.StreamUtils.copy(is, hr.getOutputStream());
         } catch (Exception e) {

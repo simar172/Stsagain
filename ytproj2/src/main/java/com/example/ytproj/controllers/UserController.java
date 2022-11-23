@@ -36,7 +36,6 @@ public class UserController {
     Service s;
     @Autowired
     ImageServiceImpl ig;
-    
 
     @PostMapping("/")
     public ResponseEntity<UserDto> createuser(@Valid @RequestBody UserDto ut) {
@@ -70,6 +69,18 @@ public class UserController {
 
     @PutMapping(value = "/profile/image/{uid}", consumes = "multipart/form-data")
     public ResponseEntity<UserDto> storeImage(@RequestParam("image") MultipartFile mf, @PathVariable int uid)
+            throws IOException {
+        String imageName = ig.profileImage(mf);
+        UserDto ut = s.getuserbyid(uid);
+        ut.setImagename(imageName);
+        System.out.println(ut.getImagename());
+        UserDto nut = s.updateuser(ut, uid);
+        return new ResponseEntity<UserDto>(nut, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/profile/testimage/{uid}", consumes = "multipart/form-data")
+    public ResponseEntity<UserDto> testimage(@RequestParam("image") MultipartFile mf, @PathVariable int uid,
+            String name)
             throws IOException {
         String imageName = ig.profileImage(mf);
         UserDto ut = s.getuserbyid(uid);

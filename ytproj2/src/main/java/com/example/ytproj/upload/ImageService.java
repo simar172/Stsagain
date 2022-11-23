@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ImageService {
     String profileImage(MultipartFile mf) throws IOException;
 
-    String uploadImage(MultipartFile mf) throws IOException;
+    String uploadImage(MultipartFile mf, String uname) throws IOException;
 
-    InputStream serveImage(String filename) throws FileNotFoundException;
+    InputStream serveImage(String filename, String uname) throws FileNotFoundException;
 
     InputStream serveProfileImage(String filename) throws FileNotFoundException;
 }

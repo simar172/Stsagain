@@ -27,15 +27,24 @@ public class ImageServiceImpl implements ImageService {
     String profilePath;
 
     @Override
-    public String uploadImage(MultipartFile mf) throws IOException {
+    public String uploadImage(MultipartFile mf, String uname) throws IOException {
         // TODO Auto-generated method stub
-        File f = new File(imagePath);
-        if (!f.exists()) {
-            f.mkdir();
+        File f1 = new File(imagePath);
+        if (!f1.exists()) {
+            f1.mkdir();
         }
-         
+        String f = f1.getAbsolutePath();
+
+        File userF = new File(f1.getAbsolutePath() + File.separator + uname);
+        if (!userF.exists()) {
+            userF.mkdir();
+        }
+        File post = new File(userF.getAbsolutePath() + File.separator + "Post");
+        if (!post.exists()) {
+            post.mkdir();
+        }
         Files.copy(mf.getInputStream(),
-                Path.of(imagePath +
+                Path.of(post +
                         File.separator +
                         mf.getOriginalFilename()),
                 StandardCopyOption.REPLACE_EXISTING);
@@ -43,9 +52,9 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public InputStream serveImage(String filename) throws FileNotFoundException {
+    public InputStream serveImage(String filename, String uname) throws FileNotFoundException {
         // TODO Auto-generated method stub
-        InputStream isInputStream = new FileInputStream(imagePath + File.separator + filename);
+        InputStream isInputStream = new FileInputStream(imagePath + File.separator + uname + File.separator +"Post"+File.separator+ filename);
         return isInputStream;
     }
 
@@ -65,6 +74,27 @@ public class ImageServiceImpl implements ImageService {
         return mf.getOriginalFilename();
     }
 
+//    @Override
+//    public String uploadImage(MultipartFile mf) throws IOException {
+//        // TODO Auto-generated method stub
+//        File f = new File(imagePath);
+//        if (!f.exists()) {
+//            f.mkdir();
+//        }
+//        String fpath = f.getAbsolutePath().toString();
+//        File postImg = new File(fpath + "\\" + "Img");
+//
+//        if (!postImg.exists()) {
+//            postImg.mkdir();
+//        }
+//
+//        Files.copy(mf.getInputStream(),
+//                Path.of(postImg.getAbsolutePath() +
+//                        File.separator +
+//                        mf.getOriginalFilename()),
+//                StandardCopyOption.REPLACE_EXISTING);
+//        return mf.getOriginalFilename();
+//    }
     @Override
     public InputStream serveProfileImage(String filename) throws FileNotFoundException {
         // TODO Auto-generated method stub

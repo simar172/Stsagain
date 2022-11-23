@@ -42,7 +42,7 @@ public class PostServiceimpl implements PostService {
         Catrgory ct = cr.findById(cid).get();
 
         Post np = mm.map(pt, Post.class);
-        np.setImagename("default.png");
+        np.setImagename(pt.getImagename());
         np.setDate(new Date());
         np.setU(u);
         np.setCt(ct);
